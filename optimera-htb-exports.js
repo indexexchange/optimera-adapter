@@ -11,3 +11,8 @@ shellInterface.OptimeraHtb = {
     render: SpaceCamp.services.RenderService.renderDfpAd.bind(null, 'OptimeraHtb')
 };
 //? }
+
+if (__directInterface.Layers.PartnersLayer.Partners.OptimeraHtb) {
+    shellInterface.OptimeraHtb = shellInterface.OptimeraHtb || {};
+    shellInterface.OptimeraHtb.adResponseCallback = __directInterface.Layers.PartnersLayer.Partners.OptimeraHtb.adResponseCallback;
+}

@@ -37,6 +37,7 @@ var partnerValidator = function (configs) {
     var result = Inspector.validate({
         type: 'object',
         properties: {
+            clientID: { type: "integer", gte: 0 },
             xSlots: {
                 type: 'object',
                 properties: {
