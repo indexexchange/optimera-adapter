@@ -113,7 +113,7 @@ describe('parseResponse', function () {
 
             /* Get mock response data from our responseData file */
             responseData = JSON.parse(fs.readFileSync(path.join(__dirname, './support/mockResponseData.json')));
-            mockData = responseData.bid;
+            mockData = responseData;
         });
 
         afterEach(function () {
@@ -259,10 +259,14 @@ describe('parseResponse', function () {
                 var result = inspector.validate({
                     type: 'object',
                     properties: {
-                        pass: {
-                            type: 'boolean',
-                            eq: true,
-
+                        partnerId: {
+                            type: 'string'
+                        },
+                        htSlot: {
+                            type: 'object'
+                        },
+                        xSlotRef: {
+                            type: 'object'
                         }
                     }
                 }, returnParcels[i]);
@@ -322,7 +326,7 @@ describe('parseResponse', function () {
 
             /* Get mock response data from our responseData file */
             responseData = JSON.parse(fs.readFileSync(path.join(__dirname, './support/mockResponseData.json')));
-            mockData = responseData.deals;
+            mockData = responseData;
         });
 
         afterEach(function () {
@@ -351,7 +355,6 @@ describe('parseResponse', function () {
                             properties: {
                                 [partnerModule.profile.targetingKeys.id]: {
                                     type: 'array',
-                                    exactLength: 1,
                                     items: {
                                         type: 'string',
                                         minLength: 1
@@ -359,7 +362,6 @@ describe('parseResponse', function () {
                                 },
                                 [partnerModule.profile.targetingKeys.pm]: {
                                     type: 'array',
-                                    exactLength: 1,
                                     items: {
                                         type: 'string',
                                         minLength: 1
@@ -367,7 +369,6 @@ describe('parseResponse', function () {
                                 },
                                 [partnerModule.profile.targetingKeys.pmid]: {
                                     type: 'array',
-                                    exactLength: 1,
                                     items: {
                                         type: 'string',
                                         minLength: 1
@@ -454,7 +455,7 @@ describe('parseResponse', function () {
 
             /* Get mock response data from our responseData file */
             responseData = JSON.parse(fs.readFileSync(path.join(__dirname, './support/mockResponseData.json')));
-            mockData = responseData.dealid;
+            mockData = responseData;
         });
 
         afterEach(function () {

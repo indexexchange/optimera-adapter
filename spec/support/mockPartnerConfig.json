@@ -1,27 +1,23 @@
 {
-    "timeout": 1000,
+    "clientID": 0,
+    "optimeraHost": "optimera.nyc",
+    "optimeraPath": "/some-path",
     "xSlots": {
-        "1": {
-            "placementId": "54321",
+        "xSlot1": {
+            "divID": "div-0",
             "sizes": [
                 [300, 250]
             ]
         },
-        "2": {
-            "placementId": "12345",
+        "xSlot2": {
+            "divID": "div-1",
             "sizes": [
                 [300, 600]
-            ]
-        },
-        "3": {
-            "placementId": "654321",
-            "sizes": [
-                [728, 90]
             ]
         }
     },
     "mapping": {
-        "728x90_970x250": ["1", "2"],
-        "300x250": ["3"]
+        "728x90_970x250": ["xSlot1", "xSlot2"],
+        "300x250": ["xSlot1"]
     }
 }
