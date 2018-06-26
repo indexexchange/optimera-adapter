@@ -37,18 +37,24 @@ var partnerValidator = function (configs) {
     var result = Inspector.validate({
         type: 'object',
         properties: {
-            clientID: { type: "integer", gte: 0 },
+            clientID: {
+              type: "integer",
+              gte: 0
+            },
+            optimeraHost: {
+              type: "string",
+              minLength: 1
+            },
+            optimeraPath: {
+              type: "string",
+              minLength: 1
+            }
             xSlots: {
                 type: 'object',
                 properties: {
                     '*': {
                         type: 'object',
-                        properties: {
-                            placementId: {
-                                type: 'string',
-                                minLength: 1
-                            }
-                        }
+                        properties: {}
                     }
                 }
             }
