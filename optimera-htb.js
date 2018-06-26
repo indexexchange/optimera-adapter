@@ -222,8 +222,8 @@ function OptimeraHtb(configs) {
      */
     function adResponseCallback(adResponse) {
         /* get callbackId from adResponse here */
-        // var callbackId = 0;
-        // __baseClass._adResponseStore[callbackId] = adResponse;
+        var callbackId = 0;
+        __baseClass._adResponseStore[callbackId] = adResponse;
     }
     /* -------------------------------------------------------------------------- */
 
@@ -471,7 +471,7 @@ function OptimeraHtb(configs) {
             lineItemType: Constants.LineItemTypes.ID_AND_SIZE,
             callbackType: Partner.CallbackTypes.NONE, // Callback type, please refer to the readme for details
             architecture: Partner.Architectures.FSRA, // Request architecture, please refer to the readme for details
-            requestType: Partner.RequestTypes.ANY // Request type, jsonp, ajax, or any.
+            requestType: Partner.RequestTypes.AJAX // Request type, jsonp, ajax, or any.
         };
         /* ---------------------------------------------------------------------------------------*/
 
