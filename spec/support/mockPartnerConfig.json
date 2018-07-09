@@ -1,18 +1,24 @@
 {
     "clientID": 0,
-    "optimeraHost": "optimera.nyc",
-    "optimeraPath": "/some-path",
+    "optimeraHost": "s3.amazonaws.com",
+    "optimeraPath": "/worthleydev/scores-json.js",
     "xSlots": {
         "xSlot1": {
             "divID": "div-0",
             "sizes": [
-                [300, 250]
+                [728, 90]
             ]
         },
         "xSlot2": {
             "divID": "div-1",
             "sizes": [
-                [300, 600]
+                [970, 250]
+            ]
+        },
+        "xSlot3": {
+            "divID": "div-1",
+            "sizes": [
+                [300, 250]
             ]
         }
     },
