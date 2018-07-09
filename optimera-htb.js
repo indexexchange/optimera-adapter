@@ -162,10 +162,10 @@ function OptimeraHtb(configs) {
 
         /* Change this to your bidder endpoint.*/
         var baseUrl = Browser.getProtocol()
-            + '//s3.amazonaws.com/elasticbeanstalk-us-east-1-397719490216/json/client/'
+            + site.optimeraHost
+            + '/json/client/'
             + site.clientID
             + '/'
-            + site.optimeraHost
             + site.optimeraPath
             + '.js';
 
