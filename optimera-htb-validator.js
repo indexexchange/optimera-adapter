@@ -48,7 +48,7 @@ var partnerValidator = function (configs) {
             optimeraPath: {
               type: "string",
               minLength: 1
-            }
+            },
             xSlots: {
                 type: 'object',
                 properties: {
