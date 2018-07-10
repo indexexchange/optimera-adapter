@@ -295,6 +295,8 @@ function OptimeraHtb(configs) {
 
           var bidProps = Object.getOwnPropertyNames(bids);
 
+
+
           for (var j = 0; j < returnParcels.length; j++) {
 
               var curReturnParcel = returnParcels[j];
@@ -316,7 +318,7 @@ function OptimeraHtb(configs) {
               /* ----------- Fill this out to find a matching bid for the current parcel ------------- */
 
               /**
-               * Our returned bid is really just teh scores, whcih will be
+               * Our returned bid is really just the scores, whcih will be
                * packed into the dealId.
                */
 
@@ -415,7 +417,6 @@ function OptimeraHtb(configs) {
                   requestId: curReturnParcel.requestId,
                   size: curReturnParcel.size,
                   price: targetingCpm,
-                  dealId: bidDealId || undefined,
                   timeOfExpiry: __profile.features.demandExpiry.enabled ? (__profile.features.demandExpiry.value + System.now()) : 0,
                   auxFn: __renderPixel,
                   auxArgs: [pixelUrl]
