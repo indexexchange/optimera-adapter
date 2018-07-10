@@ -1,7 +1,7 @@
 {
     "clientID": 0,
-    "optimeraHost": "s3.amazonaws.com",
-    "optimeraPath": "/worthleydev/scores-json.js",
+    "optimeraHost": "//s3.amazonaws.com",
+    "optimeraPath": "/worthleydev/scores-json",
     "xSlots": {
         "xSlot1": {
             "divID": "div-0",

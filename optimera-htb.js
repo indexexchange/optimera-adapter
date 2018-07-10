@@ -289,7 +289,9 @@ function OptimeraHtb(configs) {
         if(typeof(adResponse) !== 'undefined') {
 
           // put our response into an aray.
-          var bids = [adResponse];
+          var bids = [adResponse][0];
+
+          var bidProps = Object.getOwnPropertyNames(bids);
 
           for (var j = 0; j < returnParcels.length; j++) {
 
@@ -302,26 +304,24 @@ function OptimeraHtb(configs) {
 
               var curBid;
 
-              for (var i = 0; i < bids.length; i++) {
+              /**
+               * This section maps internal returnParcels and demand returned from the bid request.
+               * In order to match them correctly, they must be matched via some criteria. This
+               * is usually some sort of placements or inventory codes. Please replace the someCriteria
+               * key to a key that represents the placement in the configuration and in the bid responses.
+               */
 
-                  /**
-                   * This section maps internal returnParcels and demand returned from the bid request.
-                   * In order to match them correctly, they must be matched via some criteria. This
-                   * is usually some sort of placements or inventory codes. Please replace the someCriteria
-                   * key to a key that represents the placement in the configuration and in the bid responses.
-                   */
+              /* ----------- Fill this out to find a matching bid for the current parcel ------------- */
 
-                  /* ----------- Fill this out to find a matching bid for the current parcel ------------- */
+              /**
+               * Our returned bid is really just teh scores, whcih will be
+               * packed into the dealId.
+               */
 
-                  var divID = curReturnParcel.xSlotRef.divID;
-                  var bidObj = bids[i];
-                  var bidObjProps = Object.getOwnPropertyNames(bidObj);
+              var divID = curReturnParcel.xSlotRef.divID;
 
-                  if ( bidObjProps.includes(curReturnParcel.xSlotRef.divID) ) {
-                      curBid = bids[i];
-                      bids.splice(i, 1);
-                      break;
-                  }
+              if ( bidProps.includes(divID) ) {
+                  curBid = bids[divID];
               }
 
               /* No matching bid found so its a pass */
@@ -342,7 +342,7 @@ function OptimeraHtb(configs) {
               var bidPrice = 1;
 
               /* the size of the given slot */
-              var bidSize = [Number(curBid.width), Number(curBid.height)];
+              var bidSize = [1, 1];
 
               /* the creative/adm for the given slot that will be rendered if is the winner.
                * Please make sure the URL is decoded and ready to be document.written.
@@ -350,7 +350,7 @@ function OptimeraHtb(configs) {
               var bidCreative = '<span></span>';
 
               /* the dealId if applicable for this slot. */
-              var bidDealId = curBid[divID];
+              var bidDealId = curBid;
 
               /* explicitly pass */
               var bidIsPass = bidPrice <= 0 ? true : false;
