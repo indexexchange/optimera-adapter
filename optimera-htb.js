@@ -288,6 +288,8 @@ function OptimeraHtb(configs) {
         /* --------------------------------------------------------------------------------- */
         if(typeof(adResponse) !== 'undefined') {
 
+          var deals = [];
+
           // put our response into an aray.
           var bids = [adResponse][0];
 
@@ -320,8 +322,9 @@ function OptimeraHtb(configs) {
 
               var divID = curReturnParcel.xSlotRef.divID;
 
-              if ( bidProps.includes(divID) ) {
-                  curBid = bids[divID];
+              if ( bidProps.includes(divID) && !deals.includes(divID)) {
+                curBid = bids[divID];
+                deals.push(divID);
               }
 
               /* No matching bid found so its a pass */
