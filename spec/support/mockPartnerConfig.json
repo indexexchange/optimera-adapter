@@ -1,16 +1,16 @@
 {
     "clientID": 0,
-    "optimeraHost": "//s3.amazonaws.com",
-    "optimeraPath": "/worthleydev/scores-json",
+    "optimeraHost": "//worthleydev.s3-website-us-east-1.amazonaws.com",
+    "optimeraPath": "scores",
     "xSlots": {
         "xSlot1": {
-            "divID": "div-0",
+            "divID": "leaderboard1",
             "sizes": [
                 [728, 90], [970, 250]
             ]
         },
         "xSlot2": {
-            "divID": "div-1",
+            "divID": "rect",
             "sizes": [
                 [300, 600]
             ]
