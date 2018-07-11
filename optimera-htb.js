@@ -154,11 +154,9 @@ function OptimeraHtb(configs) {
          */
 
         /* ---------------------- PUT CODE HERE ------------------------------------ */
-        // https://s3.amazonaws.com/worthleydev/scores-json.js
-        var site = __getSite();
-
         var queryObj = {};
         var callbackId = System.generateUniqueId();
+        var site = __getSite();
 
         /* Change this to your bidder endpoint.*/
         var baseUrl = Browser.getProtocol()
@@ -262,7 +260,8 @@ function OptimeraHtb(configs) {
      * generateRequestObj to signal which slots need demand. In this funciton, the demand needs to be
      * attached to each one of the objects for which the demand was originally requested for.
      */
-    function __parseResponse(sessionId, adResponse, returnParcels) {
+    function __parseResponse(sessionId, adResponse = {}, returnParcels = []) {
+
 
         /* =============================================================================
          * STEP 4  | Parse & store demand response
@@ -285,25 +284,25 @@ function OptimeraHtb(configs) {
 
         /* ---------- Process adResponse and extract the bids into the bids array ------------*/
 
+        var bids = adResponse;
+
         /* --------------------------------------------------------------------------------- */
-        if(typeof(adResponse) !== 'undefined') {
 
-          // put our response into an aray.
-          var bids = [adResponse][0];
+        for (var j = 0; j < returnParcels.length; j++) {
 
-          var bidProps = Object.getOwnPropertyNames(bids);
+            var curReturnParcel = returnParcels[j];
 
-          for (var j = 0; j < returnParcels.length; j++) {
+            var headerStatsInfo = {};
+            var htSlotId = curReturnParcel.htSlot.getId();
+            headerStatsInfo[htSlotId] = {};
+            headerStatsInfo[htSlotId][curReturnParcel.requestId] = [curReturnParcel.xSlotName];
 
-              var curReturnParcel = returnParcels[j];
+            var curBid;
 
-              var headerStatsInfo = {};
-              var htSlotId = curReturnParcel.htSlot.getId();
-              headerStatsInfo[htSlotId] = {};
-              headerStatsInfo[htSlotId][curReturnParcel.requestId] = [curReturnParcel.xSlotName];
+            var divId = curReturnParcel.xSlotRef.divID;
+            var bidSize = curReturnParcel.htSlot.id.split('x');
 
-              var curBid;
-
+            for (var prop in bids) {
               /**
                * This section maps internal returnParcels and demand returned from the bid request.
                * In order to match them correctly, they must be matched via some criteria. This
@@ -312,119 +311,117 @@ function OptimeraHtb(configs) {
                */
 
               /* ----------- Fill this out to find a matching bid for the current parcel ------------- */
-
-              /**
-               * Our returned bid is really just the scores, whcih will be
-               * packed into the dealId.
-               */
-
-              var divID = curReturnParcel.xSlotRef.divID;
-
-              if ( bidProps.includes(divID)) {
-                curBid = bids[divID];
+              if ( prop == divId) {
+                curBid = bids[prop];
+                delete bids[prop]
+                break;
               }
+            }
 
-              /* No matching bid found so its a pass */
-              if (!curBid) {
-                  if (__profile.enabledAnalytics.requestTime) {
-                      __baseClass._emitStatsEvent(sessionId, 'hs_slot_pass', headerStatsInfo);
-                  }
-                  curReturnParcel.pass = true;
-                  continue;
-              }
+            /* No matching bid found so its a pass */
+            if (!curBid) {
+                if (__profile.enabledAnalytics.requestTime) {
+                    __baseClass._emitStatsEvent(sessionId, 'hs_slot_pass', headerStatsInfo);
+                }
+                curReturnParcel.pass = true;
+                continue;
+            }
 
-              /* ---------- Fill the bid variables with data from the bid response here. ------------*/
+            /* ---------- Fill the bid variables with data from the bid response here. ------------*/
 
-              /* Using the above variable, curBid, extract various information about the bid and assign it to
-               * these local variables */
+            /* Using the above variable, curBid, extract various information about the bid and assign it to
+             * these local variables */
 
-              /* the bid price for the given slot */
-              var bidPrice = 1;
+            /* the bid price for the given slot */
+            var bidPrice = 1;
 
-              /* the size of the given slot */
-              var bidSize = [1, 1];
+            /* the size of the given slot */
+            var bidSize = [1,1];
 
-              /* the creative/adm for the given slot that will be rendered if is the winner.
-               * Please make sure the URL is decoded and ready to be document.written.
-               */
-              var bidCreative = '<span></span>';
+            /* the creative/adm for the given slot that will be rendered if is the winner.
+             * Please make sure the URL is decoded and ready to be document.written.
+             */
+            var bidCreative = '<span></span>';
 
-              /* the dealId if applicable for this slot. */
-              var bidDealId = curBid;
+            /* the dealId if applicable for this slot. */
+            var bidDealId = curBid;
 
-              /* explicitly pass */
-              var bidIsPass = bidPrice <= 0 ? true : false;
+            /* explicitly pass */
+            var bidIsPass = bidPrice <= 0 ? true : false;
 
-              /* OPTIONAL: tracking pixel url to be fired AFTER rendering a winning creative.
-              * If firing a tracking pixel is not required or the pixel url is part of the adm,
-              * leave empty;
-              */
-              var pixelUrl = '';
+            /* OPTIONAL: tracking pixel url to be fired AFTER rendering a winning creative.
+            * If firing a tracking pixel is not required or the pixel url is part of the adm,
+            * leave empty;
+            */
+            var pixelUrl = '';
 
-              /* ---------------------------------------------------------------------------------------*/
+            /* ---------------------------------------------------------------------------------------*/
 
-              if (bidIsPass) {
-                  //? if (DEBUG) {
-                  Scribe.info(__profile.partnerId + ' returned pass for { id: ' + adResponse.id + ' }.');
-                  //? }
-                  if (__profile.enabledAnalytics.requestTime) {
-                      __baseClass._emitStatsEvent(sessionId, 'hs_slot_pass', headerStatsInfo);
-                  }
-                  curReturnParcel.pass = true;
-                  continue;
-              }
+            curBid = null;
+            if (bidIsPass) {
+                //? if (DEBUG) {
+                Scribe.info(__profile.partnerId + ' returned pass for { id: ' + adResponse.id + ' }.');
+                //? }
+                if (__profile.enabledAnalytics.requestTime) {
+                    __baseClass._emitStatsEvent(sessionId, 'hs_slot_pass', headerStatsInfo);
+                }
+                curReturnParcel.pass = true;
+                continue;
+            }
 
-              if (__profile.enabledAnalytics.requestTime) {
-                  __baseClass._emitStatsEvent(sessionId, 'hs_slot_bid', headerStatsInfo);
-              }
+            if (__profile.enabledAnalytics.requestTime) {
+                __baseClass._emitStatsEvent(sessionId, 'hs_slot_bid', headerStatsInfo);
+            }
 
-              curReturnParcel.size = bidSize;
-              curReturnParcel.targetingType = 'slot';
-              curReturnParcel.targeting = {};
+            curReturnParcel.size = bidSize;
+            curReturnParcel.targetingType = 'slot';
+            curReturnParcel.targeting = {};
 
-              var targetingCpm = '';
+            var targetingCpm = '';
 
-              //? if (FEATURES.GPT_LINE_ITEMS) {
-              targetingCpm = __baseClass._bidTransformers.targeting.apply(bidPrice);
-              var sizeKey = Size.arrayToString(curReturnParcel.size);
+            //? if (FEATURES.GPT_LINE_ITEMS) {
+            targetingCpm = __baseClass._bidTransformers.targeting.apply(bidPrice);
+            var sizeKey = Size.arrayToString(curReturnParcel.size);
 
-              if (bidDealId) {
-                  curReturnParcel.targeting[__baseClass._configs.targetingKeys.pmid] = bidDealId;
-                  curReturnParcel.targeting[__baseClass._configs.targetingKeys.pm] = [sizeKey + '_' + targetingCpm];
-              } else {
-                  curReturnParcel.targeting[__baseClass._configs.targetingKeys.om] = [sizeKey + '_' + targetingCpm];
-              }
-              curReturnParcel.targeting[__baseClass._configs.targetingKeys.id] = [curReturnParcel.requestId];
-              //? }
+            if (bidDealId) {
+                curReturnParcel.targeting[__baseClass._configs.targetingKeys.pmid] = [sizeKey + '_' + bidDealId];
+                curReturnParcel.targeting[__baseClass._configs.targetingKeys.pm] = [sizeKey + '_' + targetingCpm];
+            } else {
+                curReturnParcel.targeting[__baseClass._configs.targetingKeys.om] = [sizeKey + '_' + targetingCpm];
+            }
+            curReturnParcel.targeting[__baseClass._configs.targetingKeys.id] = [curReturnParcel.requestId];
+            //? }
 
-              //? if (FEATURES.RETURN_CREATIVE) {
-              curReturnParcel.adm = bidCreative;
-              //? }
+            //? if (FEATURES.RETURN_CREATIVE) {
+            curReturnParcel.adm = bidCreative;
+            if (pixelUrl) {
+                curReturnParcel.winNotice = __renderPixel.bind(null, pixelUrl);
+            }
+            //? }
 
-              //? if (FEATURES.RETURN_PRICE) {
-              curReturnParcel.price = Number(__baseClass._bidTransformers.price.apply(bidPrice));
-              //? }
+            //? if (FEATURES.RETURN_PRICE) {
+            curReturnParcel.price = Number(__baseClass._bidTransformers.price.apply(bidPrice));
+            //? }
 
-              var pubKitAdId = RenderService.registerAd({
-                  sessionId: sessionId,
-                  partnerId: __profile.partnerId,
-                  adm: bidCreative,
-                  requestId: curReturnParcel.requestId,
-                  size: curReturnParcel.size,
-                  price: targetingCpm,
-                  dealId: bidDealId || undefined,
-                  timeOfExpiry: __profile.features.demandExpiry.enabled ? (__profile.features.demandExpiry.value + System.now()) : 0,
-                  auxFn: __renderPixel,
-                  auxArgs: [pixelUrl]
-              });
+            var pubKitAdId = RenderService.registerAd({
+                sessionId: sessionId,
+                partnerId: __profile.partnerId,
+                adm: bidCreative,
+                requestId: curReturnParcel.requestId,
+                size: curReturnParcel.size,
+                price: targetingCpm,
+                dealId: bidDealId || undefined,
+                timeOfExpiry: __profile.features.demandExpiry.enabled ? (__profile.features.demandExpiry.value + System.now()) : 0,
+                auxFn: __renderPixel,
+                auxArgs: [pixelUrl]
+            });
 
-              //? if (FEATURES.INTERNAL_RENDER) {
-              curReturnParcel.targeting.pubKitAdId = pubKitAdId;
-              //? }
-
-          }
+            //? if (FEATURES.INTERNAL_RENDER) {
+            curReturnParcel.targeting.pubKitAdId = pubKitAdId;
+            //? }
 
         }
+
     }
 
     /* =====================================
@@ -469,11 +466,11 @@ function OptimeraHtb(configs) {
                 pm: 'ix_opti_cpm',
                 pmid: 'ix_opti_dealid'
             },
-            bidUnitInCents: 0.1, // The bid price unit (in cents) the endpoint returns, please refer to the readme for details
+            bidUnitInCents: 1, // The bid price unit (in cents) the endpoint returns, please refer to the readme for details
             lineItemType: Constants.LineItemTypes.ID_AND_SIZE,
-            callbackType: Partner.CallbackTypes.NONE, // Callback type, please refer to the readme for details
-            architecture: Partner.Architectures.FSRA, // Request architecture, please refer to the readme for details
-            requestType: Partner.RequestTypes.AJAX // Request type, jsonp, ajax, or any.
+            callbackType: Partner.CallbackTypes.ID, // Callback type, please refer to the readme for details
+            architecture: Partner.Architectures.SRA, // Request architecture, please refer to the readme for details
+            requestType: Partner.RequestTypes.ANY // Request type, jsonp, ajax, or any.
         };
         /* ---------------------------------------------------------------------------------------*/
 
