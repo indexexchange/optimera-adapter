@@ -299,8 +299,7 @@ function OptimeraHtb(configs) {
 
             var curBid;
 
-            var divId = curReturnParcel.xSlotRef.divID;
-            var bidSize = curReturnParcel.htSlot.id.split('x');
+            var divId = curReturnParcel.xSlotRef.divId;
 
             for (var prop in bids) {
               /**

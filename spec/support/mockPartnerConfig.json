@@ -4,13 +4,13 @@
     "optimeraPath": "/worthleydev/scores-json",
     "xSlots": {
         "xSlot1": {
-            "divID": "div-0",
+            "divId": "leaderboard1",
             "sizes": [
                 [728, 90], [970, 250]
             ]
         },
         "xSlot2": {
-            "divID": "div-1",
+            "divId": "rect",
             "sizes": [
                 [300, 600]
             ]
