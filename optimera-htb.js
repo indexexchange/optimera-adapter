@@ -310,9 +310,10 @@ function OptimeraHtb(configs) {
                */
 
               /* ----------- Fill this out to find a matching bid for the current parcel ------------- */
-              if ( prop == divId) {
+
+              if ( prop == divId && bids[prop] != 'undefined') {
                 curBid = bids[prop];
-                delete bids[prop]
+                bids[prop] = undefined;
                 break;
               }
             }
