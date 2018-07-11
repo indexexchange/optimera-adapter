@@ -412,6 +412,7 @@ function OptimeraHtb(configs) {
                   requestId: curReturnParcel.requestId,
                   size: curReturnParcel.size,
                   price: targetingCpm,
+                  dealId: bidDealId || undefined,
                   timeOfExpiry: __profile.features.demandExpiry.enabled ? (__profile.features.demandExpiry.value + System.now()) : 0,
                   auxFn: __renderPixel,
                   auxArgs: [pixelUrl]
@@ -420,7 +421,9 @@ function OptimeraHtb(configs) {
               //? if (FEATURES.INTERNAL_RENDER) {
               curReturnParcel.targeting.pubKitAdId = pubKitAdId;
               //? }
+
           }
+
         }
     }
 
