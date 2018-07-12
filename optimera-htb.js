@@ -161,6 +161,10 @@ function OptimeraHtb(configs) {
         var url = Browser.getPageUrl();
         var path = url.replace(/^.*\/\/[^\/]+/, '');
 
+        if (path == '/') {
+          path = '';
+        }
+
         /* Change this to your bidder endpoint.*/
         var baseUrl = Browser.getProtocol()
             + '//s3.amazonaws.com/optimera-client/'
