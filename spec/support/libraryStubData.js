@@ -28,6 +28,9 @@ var libraryStubData = {
         getPageUrl: function () {
             return 'http://www.indexexchange.com';
         },
+        getHostName: function () {
+            return 'localhost';
+        },
         topWindow: mock.getWindow()
     },
     'classify.js': {

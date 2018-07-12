@@ -41,14 +41,6 @@ var partnerValidator = function (configs) {
               type: "integer",
               gte: 0
             },
-            optimeraHost: {
-              type: "string",
-              minLength: 1
-            },
-            optimeraPath: {
-              type: "string",
-              minLength: 1
-            },
             xSlots: {
                 type: 'object',
                 properties: {

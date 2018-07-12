@@ -77,9 +77,7 @@ function OptimeraHtb(configs) {
 
     function __getSite() {
     	return {
-    		clientID: configs.clientID,
-        optimeraHost: configs.optimeraHost,
-        optimeraPath: configs.optimeraPath
+    		clientID: configs.clientID
     	};
     }
 
@@ -159,14 +157,17 @@ function OptimeraHtb(configs) {
 
         var queryObj = {};
         var callbackId = System.generateUniqueId();
+        var host = Browser.getHostName();
+        var url = Browser.getPageUrl();
+        var path = url.replace(/^.*\/\/[^\/]+/, '');
 
         /* Change this to your bidder endpoint.*/
         var baseUrl = Browser.getProtocol()
-            + site.optimeraHost
-            + '/json/client/'
+            + '//s3.amazonaws.com/optimera-client/'
             + site.clientID
             + '/'
-            + site.optimeraPath
+            + host
+            + path
             + '.js';
 
         /* ------------------------ Get consent information -------------------------
