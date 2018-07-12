@@ -157,7 +157,7 @@ function OptimeraHtb(configs) {
 
         var queryObj = {};
         var callbackId = System.generateUniqueId();
-        var host = Browser.getHostName();
+        var host = Browser.getHostname();
         var url = Browser.getPageUrl();
         var path = url.replace(/^.*\/\/[^\/]+/, '');
 

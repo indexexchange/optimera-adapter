@@ -28,7 +28,7 @@ var libraryStubData = {
         getPageUrl: function () {
             return 'http://www.indexexchange.com';
         },
-        getHostName: function () {
+        getHostname: function () {
             return 'localhost';
         },
         topWindow: mock.getWindow()
