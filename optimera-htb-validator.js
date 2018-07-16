@@ -44,8 +44,13 @@ var partnerValidator = function (configs) {
             xSlots: {
                 type: 'object',
                 properties: {
-                    'divID': {
-                        type: 'string'
+                    '*': {
+                        type: 'object',
+                        properties: {
+                          divID: {
+                            type: "string"
+                          }
+                        }
                     }
                 }
             }
