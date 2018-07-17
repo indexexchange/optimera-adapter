@@ -8,8 +8,7 @@
 
 //? if (FEATURES.GPT_LINE_ITEMS) {
 shellInterface.OptimeraHtb = {
-    render: SpaceCamp.services.RenderService.renderDfpAd.bind(null, 'OptimeraHtb'),
-    config: __directInterface.Layers.PartnersLayer.Partners.OptimeraHtb.__getSite()
+    render: SpaceCamp.services.RenderService.renderDfpAd.bind(null, 'OptimeraHtb')
 };
 //? }
 
