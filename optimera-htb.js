@@ -294,7 +294,7 @@ function OptimeraHtb(configs) {
         if(typeof(adResponse) !== 'undefined') {
 
           // put our response into an aray.
-          var bids = [adResponse][0];
+          var bids = adResponse;
 
           var bidProps = Object.getOwnPropertyNames(bids);
 
