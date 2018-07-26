@@ -307,7 +307,7 @@ function OptimeraHtb(configs) {
               headerStatsInfo[htSlotId] = {};
               headerStatsInfo[htSlotId][curReturnParcel.requestId] = [curReturnParcel.xSlotName];
 
-              var curBid;
+              var curBid = null;
 
               /**
                * This section maps internal returnParcels and demand returned from the bid request.
@@ -325,7 +325,7 @@ function OptimeraHtb(configs) {
 
               var divID = curReturnParcel.xSlotRef.divID;
 
-              if ( bidProps.includes(divID)) {
+              if ( bidProps.indexOf(divID) > -1) {
                 curBid = bids[divID];
               }
 

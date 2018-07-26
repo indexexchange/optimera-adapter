@@ -2,16 +2,10 @@
     "clientID": 0,
     "xSlots": {
         "xSlot1": {
-            "divID": "leaderboard1",
-            "sizes": [
-                [728, 90], [970, 250]
-            ]
+            "divID": "leaderboard1"
         },
         "xSlot2": {
-            "divID": "rect",
-            "sizes": [
-                [300, 600]
-            ]
+            "divID": "rect"
         }
     },
     "mapping": {
