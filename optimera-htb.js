@@ -28,6 +28,7 @@ var Utilities = require('utilities.js');
 var ComplianceService;
 var EventsService;
 var RenderService;
+var CacheBuster;
 
 //? if (DEBUG) {
 var ConfigValidators = require('config-validators.js');
@@ -152,7 +153,6 @@ function OptimeraHtb(configs) {
          */
 
         /* ---------------------- PUT CODE HERE ------------------------------------ */
-        // https://s3.amazonaws.com/worthleydev/scores-json.js
         var site = __getSite();
 
         var queryObj = {};
@@ -172,7 +172,9 @@ function OptimeraHtb(configs) {
             + '/'
             + host
             + path
-            + '.js';
+            + '.js'
+            + '?t='
+            + CacheBuster;
 
         /* ------------------------ Get consent information -------------------------
          * If you want to implement GDPR consent in your adapter, use the function
@@ -437,6 +439,7 @@ function OptimeraHtb(configs) {
         ComplianceService = SpaceCamp.services.ComplianceService;
         EventsService = SpaceCamp.services.EventsService;
         RenderService = SpaceCamp.services.RenderService;
+        CacheBuster = System.generateUniqueId();
 
         /* =============================================================================
          * STEP 1  | Partner Configuration
