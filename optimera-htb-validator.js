@@ -46,11 +46,6 @@ var partnerValidator = function (configs) {
                 properties: {
                     '*': {
                         type: 'object',
-                        properties: {
-                          divID: {
-                            type: "string"
-                          }
-                        }
                     }
                 }
             }

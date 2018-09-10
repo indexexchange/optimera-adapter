@@ -42,7 +42,11 @@ function generateReturnParcels(profile, partnerConfig) {
                 returnParcels.push({
                     partnerId: profile.partnerId,
                     htSlot: htSlot,
-                    ref: "",
+                    ref: {
+                        getSlotElementId: function() {
+                          return 'leaderboard1';
+                      }
+                    },
                     xSlotRef: partnerConfig.xSlots[xSlotName],
                     requestId: '_' + Date.now()
                 });

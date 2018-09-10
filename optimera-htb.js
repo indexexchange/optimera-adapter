@@ -325,7 +325,7 @@ function OptimeraHtb(configs) {
                * packed into the dealId.
                */
 
-              var divID = curReturnParcel.xSlotRef.divID;
+              var divID = curReturnParcel.ref.getSlotElementId();
 
               if ( bidProps.indexOf(divID) > -1) {
                 curBid = bids[divID];

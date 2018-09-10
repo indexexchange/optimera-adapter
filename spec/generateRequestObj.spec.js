@@ -16,7 +16,6 @@
 /* =====================================
  * Utilities
  * ---------------------------------- */
-
 /**
  * Returns an array of parcels based on all of the xSlot/htSlot combinations defined
  * in the partnerConfig (simulates a session in which all of them were requested).
@@ -42,7 +41,11 @@ function generateReturnParcels(profile, partnerConfig) {
                 returnParcels.push({
                     partnerId: profile.partnerId,
                     htSlot: htSlot,
-                    ref: "",
+                    ref: {
+                        getSlotElementId: function() {
+                          return 'leaderboard1';
+                      }
+                    },
                     xSlotRef: partnerConfig.xSlots[xSlotName],
                     requestId: '_' + Date.now()
                 });
