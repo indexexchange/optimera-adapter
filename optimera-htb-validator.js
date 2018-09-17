@@ -45,7 +45,7 @@ var partnerValidator = function (configs) {
                 type: 'object',
                 properties: {
                     '*': {
-                        type: 'object',
+                        type: 'object'
                     }
                 }
             }
