@@ -165,14 +165,14 @@ function OptimeraHtb(configs) {
 
         /* Change this to your bidder endpoint.*/
         var baseUrl = Browser.getProtocol()
-            + '//s3.amazonaws.com/optimera-client/'
+            + '//dyv1bugovvq1g.cloudfront.net/'
             + site.clientID
             + '/'
             + filteredUrl
             + '.js'
             + '?t='
             + CacheBuster;
-            
+
         /* ------------------------ Get consent information -------------------------
          * If you want to implement GDPR consent in your adapter, use the function
          * ComplianceService.gdpr.getConsent() which will return an object.
