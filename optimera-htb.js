@@ -163,6 +163,11 @@ function OptimeraHtb(configs) {
         var path = url.split("://")[1];
         var filteredUrl = path.split("?")[0];
 
+        // make the Url a / for home pages without a trailing slash
+        if(filteredUrl.indexOf('/') === -1) {
+          filteredUrl = filteredUrl + '/';
+        }
+
         /* Change this to your bidder endpoint.*/
         var baseUrl = Browser.getProtocol()
             + '//dyv1bugovvq1g.cloudfront.net/'
