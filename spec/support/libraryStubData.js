@@ -26,10 +26,10 @@ var libraryStubData = {
             return 768;
         },
         getPageUrl: function () {
-            return 'http://www.indexexchange.com';
+            return 'http://www.localhost.com/?var=foo&var2=foo2';
         },
         getHostname: function () {
-            return 'localhost';
+            return 'localhost.com';
         },
         topWindow: mock.getWindow()
     },

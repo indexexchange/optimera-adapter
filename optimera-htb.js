@@ -157,21 +157,23 @@ function OptimeraHtb(configs) {
 
         var queryObj = {};
         var callbackId = System.generateUniqueId();
-        var host = Browser.getHostname();
         var url = Browser.getPageUrl();
-        var path = url.replace(/^.*\/\/[^\/]+/, '');
 
-        if (path == '/') {
-          path = '';
+        /* Filter the url to remove the protocol and query params. */
+        var path = url.split("://")[1];
+        var filteredUrl = path.split("?")[0];
+
+        // make the Url a / for home pages without a trailing slash
+        if(filteredUrl.indexOf('/') === -1) {
+          filteredUrl = filteredUrl + '/';
         }
 
         /* Change this to your bidder endpoint.*/
         var baseUrl = Browser.getProtocol()
-            + '//s3.amazonaws.com/optimera-client/'
+            + '//dyv1bugovvq1g.cloudfront.net/'
             + site.clientID
             + '/'
-            + host
-            + path
+            + filteredUrl
             + '.js'
             + '?t='
             + CacheBuster;
